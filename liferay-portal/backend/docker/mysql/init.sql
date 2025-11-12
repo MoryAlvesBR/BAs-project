@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS liferaydb;
+CREATE USER 'liferay'@'%' IDENTIFIED BY 'liferay';
+GRANT ALL PRIVILEGES ON liferaydb.* TO 'liferay'@'%';
+FLUSH PRIVILEGES;
