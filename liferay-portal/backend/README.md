@@ -14,3 +14,4 @@ Backend desenvolvido em **Spring Boot (Java 21)** usando **Gradle** e banco **My
 ```bash
 cd backend/docker
 docker compose up -d
+
