@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lportal
+      MYSQL_USER: liferay
+      MYSQL_PASSWORD: liferay
+    volumes:
+      - ./backend/docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  liferay:
+    image: liferay/portal:7.4.3.36-ga36
+    container_name: liferay
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    environment:
+      - LIFERAY_JDBC_DEFAULT_URL=jdbc:mysql://mysql:3306/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+      - LIFERAY_JDBC_DEFAULT_USERNAME=liferay
+      - LIFERAY_JDBC_DEFAULT_PASSWORD=liferay
+      - LIFERAY_JDBC_DEFAULT_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/lportal?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: liferay
+      SPRING_DATASOURCE_PASSWORD: liferay
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8081
+
+volumes:
+  mysql_data:

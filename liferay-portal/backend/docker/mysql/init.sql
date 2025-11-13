@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS liferaydb;
-CREATE USER 'liferay'@'%' IDENTIFIED BY 'liferay';
-GRANT ALL PRIVILEGES ON liferaydb.* TO 'liferay'@'%';
+CREATE DATABASE IF NOT EXISTS liferay CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE USER IF NOT EXISTS 'liferay'@'%' IDENTIFIED BY 'liferay';
+GRANT ALL PRIVILEGES ON liferay.* TO 'liferay'@'%';
 FLUSH PRIVILEGES;

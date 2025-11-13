@@ -1,18 +1,12 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.3.3'
+    id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
 }
 
 group = 'com.diogo.app'
-version = '1.0.0'
-description = 'Shop Backend using Spring Boot + Gradle'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '21'
 
 repositories {
     mavenCentral()
@@ -21,7 +15,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'mysql:mysql-connector-j:8.0.33'
+    implementation 'com.mysql:mysql-connector-j:8.0.33'
+    
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
